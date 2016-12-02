@@ -13,6 +13,9 @@
     <link rel="import" href="../emh-pagination.html"/>
 
     <style is="custom-style" include="demo-pages-shared-styles">
+      .centered {
+        max-width: 800px;
+      }
     </style>
   </head>
   <body>
@@ -21,7 +24,7 @@
       <h3>Basic emh-pagination Demo</h3>
       <demo-snippet>
         <template>
-          <emh-pagination></emh-pagination>
+          <emh-pagination page-size="10" range-size="8" total="234" current-page="1"></emh-pagination>
         </template>
       </demo-snippet>
     </div>
