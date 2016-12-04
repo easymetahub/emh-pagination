@@ -20,21 +20,38 @@
       paper-button.emh-pagination {
         float: left;
       }
-      .flex {
-        @apply(--layout-horizontal);
-      }
       
     </style>
-    <div class="container flex">
-      <paper-icon-button icon="icons:first-page" on-tap="prev" raised></paper-icon-button>
-      <paper-menu selected="{{current}}" selected-attribute="page" id="emh-pagination-row">
-        <!--hidden item take place 0 so, first item will be 1 
-                <paper-item class="paper-pagination" page="0" hidden="true"></paper-item>-->
+    <div class="container">
+      <paper-menu selected="{{currentPage}}" selected-attribute="page" id="emh-pagination-row">
         <template is="dom-repeat" items="[[pages]]" restamp="true">
           <paper-item raised class="paper-pagination"  hidden$="[[item.hidden]]"  page="[[item.page]]">[[item.page]]</paper-item>
         </template>
+        <template is="dom-if" if="{{showProperties}}">
+          <div>
+            <table style="background-color: lightgrey; width: 100%;">
+              <thead>
+                <tr>
+                  <th>page-size</th>
+                  <th>total</th>
+                  <th>range-size</th>
+                  <th>current-page</th>
+                  <th>offset</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{pageSize}}</td>
+                  <td>{{total}}</td>
+                  <td>{{rangeSize}}</td>
+                  <td>{{currentPage}}</td>
+                  <td>{{offset}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </template>
       </paper-menu>
-      <paper-icon-button icon="icons:last-page" on-tap="next" raised>next</paper-icon-button>
     </div>
   </template>
 
@@ -44,6 +61,10 @@
       is: 'emh-pagination',
 
       properties: {
+        showProperties: {
+          type: Boolean,
+          value: false
+        },
         pageSize: {
           type: Number
         },
@@ -69,22 +90,23 @@
           type: Number,
           readOnly: true,
           notify: true,
-          computed: '_calculateOffset(current,pageSize)'
+          computed: '_calculateOffset(currentPage,pageSize)'
         }
       },
       ready:function(){
       
       },
-      prev: function() {
-        if (this.current && this.current > 1)
-          this.current -= 1;
+      pageOffest(page) {
+        return (page - 1);
       },
-      next: function() {
-        if (this.current && this.current < this.pageCount)
-          this.current += 1;
+      showFirst: function(index) {
+        return index == 1;
       },
-      _calculateOffset: function(current, pageSize) {
-        return (current - 1) * pageSize;
+      showLast: function(index) {
+        return index == this.pageCount;
+      },
+      _calculateOffset: function(currentPage, pageSize) {
+        return currentPage * pageSize;
       },
       _calculatePages: function(size, total, current_page) {
         function start_link($p, $g, $n) {
@@ -102,10 +124,11 @@
         var result = [];
         var startRange = start_link(current_page, totalPage, this.rangeSize);
         var endRange = Math.min(totalPage, (startRange + this.rangeSize));
-        for (i = 1; i <= totalPage; i++) {
-          hidden = (i != 1 && i < startRange || i > endRange && i != this.pageCount);
+        for (i = 0; i < totalPage; i++) {
+          hidden = (i != 0 && i < startRange || i > endRange && i != (this.pageCount - 1));
           result.push({
             page: i,
+            value: i,
             hidden: hidden
           });
         }
