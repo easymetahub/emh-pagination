@@ -13,6 +13,13 @@
       :host {
         display: block;
         --paper-icon-button: { width: 64px; height: 64px; }
+        --paper-item: { border: 1px black; border-radius: 3px; }
+      }
+      td {
+      text-align: center;
+      }
+      .paper-menu-0 {
+        horizontal-align: center;
       }
       paper-item.emh-pagination {
         float: left;
@@ -25,33 +32,33 @@
     <div class="container">
       <paper-menu selected="{{currentPage}}" selected-attribute="page" id="emh-pagination-row">
         <template is="dom-repeat" items="[[pages]]" restamp="true">
-          <paper-item raised class="paper-pagination"  hidden$="[[item.hidden]]"  page="[[item.page]]">[[item.page]]</paper-item>
-        </template>
-        <template is="dom-if" if="{{showProperties}}">
-          <div>
-            <table style="background-color: lightgrey; width: 100%;">
-              <thead>
-                <tr>
-                  <th>page-size</th>
-                  <th>total</th>
-                  <th>range-size</th>
-                  <th>current-page</th>
-                  <th>offset</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{pageSize}}</td>
-                  <td>{{total}}</td>
-                  <td>{{rangeSize}}</td>
-                  <td>{{currentPage}}</td>
-                  <td>{{offset}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <paper-item raised class="emh-pagination"  hidden$="[[item.hidden]]"  page="[[item.page]]">[[item.page]]</paper-item>
         </template>
       </paper-menu>
+      <template is="dom-if" if="{{showProperties}}">
+        <div>
+          <table style="background-color: lightgrey; width: 100%;">
+            <thead>
+              <tr>
+                <th>page-size</th>
+                <th>total</th>
+                <th>range-size</th>
+                <th>current-page</th>
+                <th>offset</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{pageSize}}</td>
+                <td>{{total}}</td>
+                <td>{{rangeSize}}</td>
+                <td>{{currentPage}}</td>
+                <td>{{offset}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </template>
     </div>
   </template>
 
@@ -61,31 +68,52 @@
       is: 'emh-pagination',
 
       properties: {
+        /**
+         * Shows the table below that shows the properties.
+         */
         showProperties: {
           type: Boolean,
           value: false
         },
+        /**
+         * Number of items in a page of data.
+         */
         pageSize: {
           type: Number
         },
+        /**
+         * The total number of elements to be paginated.
+         */
         total: {
           type: Number
         },
+        /**
+         *
+         */
         pages: {
           type: Array,
           readOnly: true,
           computed: '_calculatePages(pageSize,total,currentPage)'
         },
+        /**
+         * The number of pages listed around the current page
+         */
         rangeSize: {
           type: Number,
           value: 10
         },
+        /**
+         * The currently selected page
+         */
         currentPage: {
           type: Number,
           value: 1,
           reflectToAttribute: true,
           notify: true
         },
+        /**
+         * The offset in the list of items at the beginning of the selected page.
+         */
         offset: {
           type: Number,
           readOnly: true,
@@ -95,15 +123,6 @@
       },
       ready:function(){
       
-      },
-      pageOffest(page) {
-        return (page - 1);
-      },
-      showFirst: function(index) {
-        return index == 1;
-      },
-      showLast: function(index) {
-        return index == this.pageCount;
       },
       _calculateOffset: function(currentPage, pageSize) {
         return currentPage * pageSize;
