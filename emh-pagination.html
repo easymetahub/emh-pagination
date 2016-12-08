@@ -79,7 +79,8 @@
          * Number of items in a page of data.
          */
         pageSize: {
-          type: Number
+          type: Number,
+          value: 10
         },
         /**
          * The total number of elements to be paginated.
@@ -107,7 +108,7 @@
          */
         currentPage: {
           type: Number,
-          value: 1,
+          value: 0,
           reflectToAttribute: true,
           notify: true
         },
@@ -125,7 +126,7 @@
       
       },
       _calculateOffset: function(currentPage, pageSize) {
-        return currentPage * pageSize;
+        return (currentPage * pageSize) + 1;
       },
       _calculatePages: function(size, total, current_page) {
         function start_link($p, $g, $n) {
