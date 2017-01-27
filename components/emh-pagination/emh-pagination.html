@@ -1,0 +1,229 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../paper-menu/paper-menu.html"/>
+<link rel="import" href="../paper-item/paper-item.html"/>
+<link rel="import" href="../paper-button/paper-button.html"/>
+<link rel="import" href="../iron-icons/iron-icons.html"/>
+<link rel="import" href="../iron-icon/iron-icon.html"/>
+<link rel="import" href="../paper-icon-button/paper-icon-button.html"/>
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html"/>
+        
+<!--
+
+`emh-pagination` Pagination for selecting which page of results to display.
+
+Example:
+
+    <iron-location     id="sourceLocation" 
+                       query="{{query}}"></iron-location>
+    <iron-query-params id="sourceParams" 
+                       params-string="{{query}}" 
+                       params-object="{{params}}"></iron-query-params>
+    <iron-ajax         auto="true" 
+                       url="/modules/search.xqy"  
+                       params="[[params]]"
+                       handle-as="json"
+                       last-response="{{result}}"></iron-ajax>
+    <emh-pagination    range-size="6" 
+                       total="[[result.total]]" 
+                       offset="{{params.start}}"></emh-pagination>
+
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="emh-pagination">
+  <template>
+    <style>
+      :host {
+        display: block;
+        --paper-icon-button: { width: 64px; height: 64px; }
+        --paper-item: { border: 1px black; border-radius: 3px; }
+      }
+      td {
+      text-align: center;
+      }
+      .paper-menu-0 {
+        horizontal-align: center;
+      }
+      paper-item.emh-pagination {
+        float: left;
+      }
+      paper-button.emh-pagination {
+        float: left;
+      }
+      
+    </style>
+    <div class="container">
+      <paper-menu selected="{{currentPage}}" selected-attribute="page" id="emh-pagination-row">
+        <template is="dom-repeat" items="[[pages]]" restamp="true">
+          <paper-item raised class="emh-pagination"  hidden$="[[item.hidden]]"  page="[[item.page]]">[[_displayPageNumber(item.page)]]</paper-item>
+        </template>
+      </paper-menu>
+      <template is="dom-if" if="{{showProperties}}">
+        <div>
+          <table style="background-color: lightgrey; width: 100%;">
+            <thead>
+              <tr>
+                <th>page-size</th>
+                <th>total</th>
+                <th>range-size</th>
+                <th>current-page</th>
+                <th>offset</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{pageSize}}</td>
+                <td>{{total}}</td>
+                <td>{{rangeSize}}</td>
+                <td>{{currentPage}}</td>
+                <td>{{offset}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </template>
+    </div>
+  </template>
+
+  <script>
+      Polymer({
+      
+      is: 'emh-pagination',
+      
+      properties: {
+        /**
+         * Shows the table below that shows the properties.
+         */
+        showProperties: {
+          type: Boolean,
+          value: false
+        },
+        /**
+         * Number of items in a page of data.
+         */
+        pageSize: {
+          type: Number,
+          value: 10,
+          observer: '_pageSizeChanged(offset, pageSize)'
+        },
+        /**
+         * The total number of elements to be paginated.
+         */
+        total: {
+          type: Number,
+          observer: '_totalChanged'
+        },
+        /**
+         *
+         */
+        pages: {
+          type: Array,
+          readOnly: true,
+          computed: '_calculatePages(pageSize,total,currentPage)'
+        },
+        /**
+         * The number of pages listed around the current page
+         */
+        rangeSize: {
+          type: Number,
+          value: 10
+        },
+        /**
+         * The currently selected page
+         */
+        currentPage: {
+          type: Number,
+          value: 0,
+          notify: true,
+          observer: '_currentPageChanged'
+        },
+        /**
+         * The offset in the list of items at the beginning of the selected page.
+         */
+        offset: {
+          type: Number,
+          value: 1,
+          notify: true,
+          observer: '_offsetChanged'
+        }
+      },
+      created:function(){
+        this.updating = true;
+      },
+      ready:function(){
+        this.updating = false;
+      },
+      attached:function(){
+        this.updating = false;
+      },
+      detached:function(){
+        this.updating = true;
+      },
+      _displayPageNumber: function(x) {
+        return x + 1;
+      },
+      _pageSizeChanged: function(offset,pageSize) {
+        if (this.updating) return;
+        this.updating = true;
+        if (pageSize && offset)
+          this.currentPage = (offset - 1) / pageSize;
+        else
+          this.currentPage = 0;
+        this.updating = false;
+      },
+      _totalChanged: function() {
+        if (this.updating) return;
+        this.updating = true;
+        if ((this.offset == null) || (this.offset >= this.total)) {
+          this.currentPage = 0;
+          this.offset = 1;
+        } else {
+          this.currentPage = (this.offset - 1) / this.pageSize;
+        }
+        this.updating = false;
+      },
+      _currentPageChanged: function() {
+        if (this.updating) return;
+        this.updating = true;
+        this.offset = (this.currentPage * this.pageSize) + 1;
+        this.updating = false;
+      },
+      _offsetChanged: function() {
+        if (this.updating) return;
+        this.updating = true;
+        this.currentPage = (this.offset - 1) / this.pageSize;
+        this.updating = false;
+      },
+      _calculatePages: function(size, total, current_page) {
+        function start_link($p, $g, $n) {
+          $s = $p - Math.floor($n / 2);
+          if ($s < 1) {
+            return 1;
+          }
+          $max_s = $g - ($n - 1);
+          if ($s > $max_s) {
+            return $max_s;
+          }
+          return $s;
+        }
+        var totalPage = this.pageCount = Math.ceil(total / size);
+        var result = [];
+        var startRange = start_link(current_page, totalPage, this.rangeSize);
+        var endRange = Math.min(totalPage, (startRange + this.rangeSize));
+        for (i = 0; i < totalPage; i++) {
+          hidden = (i != 0 && i < startRange || i > endRange && i != (this.pageCount - 1));
+          result.push({
+            page: i,
+            value: i,
+            hidden: hidden
+          });
+        }
+        return result;
+      }
+      
+      
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>emh-pagination demo</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes"/>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html"/>
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html"/>
+
+
+    <link rel="import" href="../emh-pagination.html"/>
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+      .centered {
+        max-width: 800px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="vertical-section-container centered">
+      <h3>Basic emh-pagination Demo</h3>
+      <demo-snippet>
+        <template>
+          <emh-pagination page-size="10" range-size="8" total="234" current-page="15" show-properties></emh-pagination>
+        </template>
+      </demo-snippet>
+    </div>
+
+  </body>
+</html>

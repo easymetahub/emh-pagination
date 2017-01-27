@@ -1,0 +1,40 @@
+{
+  "name": "emh-pagination",
+  "description": "Pagination for selecting which page of results to display.",
+  "authors": [
+    "Easy Meta Hub",
+    "Loren Cahlander"
+  ],
+  "keywords": [
+    "web-components",
+    "web-component",
+    "polymer",
+    "pagination",
+    "page"
+  ],
+  "main": "emh-pagination.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "paper-menu": "PolymerElements/paper-menu#^1.2.2",
+    "paper-item": "PolymerElements/paper-item#^1.2.1",
+    "iron-icons": "PolymerElements/iron-icons#^1.2.0",
+    "iron-icon": "PolymerElements/iron-icon#^1.0.12"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/easymetahub/emh-pagination",
+  "_release": "6ee6ab0dda",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "6ee6ab0ddaa045917fdbf98624231edf7cf91de9"
+  },
+  "_source": "https://github.com/easymetahub/emh-pagination.git",
+  "_target": "master",
+  "_originalSource": "easymetahub/emh-pagination",
+  "_direct": true
+}
