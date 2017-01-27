@@ -9,11 +9,23 @@
         
 <!--
 
-`emh-pagination` is a div that displays an interactive XML allowing the user to expand and collapse XML data.
+`emh-pagination` is for dividing a result set into discrete pages.
 
 Example:
 
-    <emh-pagination total="234" offset="{{foo}}" show-properties></emh-pagination>
+    <iron-location     id="sourceLocation" 
+                       query="{{query}}"></iron-location>
+    <iron-query-params id="sourceParams" 
+                       params-string="{{query}}" 
+                       params-object="{{params}}"></iron-query-params>
+    <iron-ajax         auto="true" 
+                       url="/modules/search.xqy"  
+                       params="[[params]]"
+                       handle-as="json"
+                       last-response="{{result}}"></iron-ajax>
+    <emh-pagination    range-size="6" 
+                       total="[[result.total]]" 
+                       offset="{{params.start}}"></emh-pagination>
 
 
 

@@ -2,7 +2,7 @@
 
 
 
-`emh-pagination` is a div that displays an interactive XML allowing the user to expand and collapse XML data.
+`emh-pagination` Pagination for selecting which page of results to display.
 
 ## Installation
 

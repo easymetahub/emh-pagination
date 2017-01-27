@@ -1,7 +1,7 @@
 {
   "name": "emh-pagination",
     "version": "1.0.0",
-  "description": "Paginator for selecting which page of results to display",
+  "description": "Pagination for selecting which page of results to display.",
   "authors": [
     "Easy Meta Hub",
     "Loren Cahlander"
