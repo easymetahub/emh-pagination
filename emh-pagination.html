@@ -57,7 +57,7 @@ Example:
     <div class="container">
       <paper-menu selected="{{currentPage}}" selected-attribute="page" id="emh-pagination-row">
         <template is="dom-repeat" items="[[pages]]" restamp="true">
-          <paper-item raised class="emh-pagination"  hidden$="[[item.hidden]]"  page="[[item.page]]">[[item.page]]</paper-item>
+          <paper-item raised class="emh-pagination"  hidden$="[[item.hidden]]"  page="[[item.page]]">[[_displayPageNumber(item.page)]]</paper-item>
         </template>
       </paper-menu>
       <template is="dom-if" if="{{showProperties}}">
@@ -160,6 +160,9 @@ Example:
       },
       detached:function(){
         this.updating = true;
+      },
+      _displayPageNumber: function(x) {
+        return x + 1;
       },
       _pageSizeChanged: function(offset,pageSize) {
         if (this.updating) return;
