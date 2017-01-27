@@ -1,6 +1,6 @@
 {
   "name": "emh-pagination",
-    "version": "1.0.0",
+    "version": "1.0.1",
   "description": "Pagination for selecting which page of results to display.",
   "authors": [
     "Easy Meta Hub",
@@ -10,7 +10,8 @@
     "web-components",
     "web-component",
     "polymer",
-    "pagination"
+    "pagination",
+    "page"
   ],
 "main": "emh-pagination.html",
   "dependencies": {
