@@ -1,6 +1,18 @@
 {
   "name": "emh-pagination",
-  "main": "emh-pagination.html",
+    "version": "1.0.0",
+  "description": "Paginator for selecting which page of results to display",
+  "authors": [
+    "Easy Meta Hub",
+    "Loren Cahlander"
+  ],
+  "keywords": [
+    "web-components",
+    "web-component",
+    "polymer",
+    "pagination"
+  ],
+"main": "emh-pagination.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "paper-menu": "PolymerElements/paper-menu#^1.2.2",
