@@ -4,9 +4,6 @@
 
 `emh-pagination` is a div that displays an interactive XML allowing the user to expand and collapse XML data.
 
-This is a polymer wrapper of a javascript based XML Viewer created by Lev Muchnik at (http://www.levmuchnik.net/Content/ProgrammingTips/WEB/XMLDisplay/DisplayXMLFileWithJavascript.html)
-
-
 ## Installation
 
 ```
