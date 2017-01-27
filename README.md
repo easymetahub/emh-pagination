@@ -1,38 +1,30 @@
-# \<emh-pagination\>
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/owner/my-element)
 
 
 
-## Install the Polymer-CLI
+`emh-pagination` is a div that displays an interactive XML allowing the user to expand and collapse XML data.
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+This is a polymer wrapper of a javascript based XML Viewer created by Lev Muchnik at (http://www.levmuchnik.net/Content/ProgrammingTips/WEB/XMLDisplay/DisplayXMLFileWithJavascript.html)
 
-## Viewing Your Application
 
-```
-$ polymer serve
-```
-
-## Building Your Application
+## Installation
 
 ```
-$ polymer build
+bower install easymetahub/emh-pagination --save
 ```
 
-This will create a `build/` folder with `bundled/` and `unbundled/` sub-folders
-containing a bundled (Vulcanized) and unbundled builds, both run through HTML,
-CSS, and JS optimizers.
-
-You can serve the built versions by giving `polymer serve` a folder to serve
-from:
+## Usage
 
 ```
-$ polymer serve build/bundled
+<emh-pagination total="234" offset="{{foo}}" show-properties></emh-pagination>
 ```
 
-## Running Tests
 
-```
-$ polymer test
-```
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+## Credits
+
+Loren Cahlander
+
+## License
+
+MIT License
